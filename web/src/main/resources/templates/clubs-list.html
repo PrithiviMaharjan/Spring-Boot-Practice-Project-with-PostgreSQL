@@ -11,13 +11,16 @@
                 <p class="lead fw-normal text-muted mb-0" Runners Found In Your Area</p>
             </div>
             <div class="row gx-5">
-                <div th:each="club :${clubs}" class="col-lg-6">
+                <div th:each="club :${clubs}" class="col-lg-6 mb-2">
                     <div class="position- relative mb-5">
+                        <p th:text="${club.title}" class="h3 fw-bolder text-decoration-none link-dark stretched-link"
+                           href="#!">Project name</p>
                         <img class="img-fluid rounded-3 mb-3" th:src="${club.photoUrl}"
                              alt="..."/><br/>
-                        <a th:text="${club.title}" class="h3 fw-bolder text-decoration-none link-dark stretched-link"
-                           href="#!">Project name</a>
+                        <p th:text="${club.content}" class="h3 text-decoration-none link-dark"
+                           href="#!">Project name</p>
                     </div>
+                    <a class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">Edit</a>
                 </div>
             </div>
         </div>

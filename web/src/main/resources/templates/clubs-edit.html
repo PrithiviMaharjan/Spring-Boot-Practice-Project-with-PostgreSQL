@@ -6,7 +6,8 @@
 <main class="flex-shrink-0">
     <section layout:fragment="body" class="py-5">
         <div class="container">
-            <form role="form" method="post" th:action="@{/clubs/new}" th:object="${club}">
+            <form role="form" method="post" th:action="@{/clubs/{clubId}/edit(clubId=${club.id})}" th:object="${club}">
+                <input type="hidden" th:field="*{id}">
                 <div class="form-row">
                     <div class="form-group mb-3">
                         <label for="title">Title</label>
@@ -34,7 +35,7 @@
                                th:field="*{content}"
                                placeholder="Content">
                     </div>
-                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="submit" class="btn btn-primary">Edit</button>
             </form>
         </div>
     </section>

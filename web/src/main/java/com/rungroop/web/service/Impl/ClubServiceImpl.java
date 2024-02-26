@@ -23,10 +23,36 @@ public class ClubServiceImpl implements ClubService {
     @Override
     public List<ClubDto> findAllClubs() {
         List<Club> club = clubRepository.findAll();
-        return club.stream().map(this::mapToClubData).collect(Collectors.toList());
+        return club.stream().map(this::mapToClubDto).collect(Collectors.toList());
     }
 
-    private ClubDto mapToClubData(Club club){
+    @Override
+    public void saveClub(Club club) {
+        clubRepository.save(club);
+    }
+
+    @Override
+    public ClubDto findClubById(long clubId) {
+        return mapToClubDto(clubRepository.findById(clubId).get());
+    }
+
+    @Override
+    public void updateClub(ClubDto clubDto) {
+        clubRepository.save(mapToClub(clubDto));
+    }
+
+    private Club mapToClub(ClubDto clubDto){
+        return Club.builder()
+                .id(clubDto.getId())
+                .title(clubDto.getTitle())
+                .photoUrl(clubDto.getPhotoUrl())
+                .content(clubDto.getContent())
+                .createdOn(clubDto.getCreatedOn())
+                .updatedOn(clubDto.getUpdatedOn())
+                .build();
+    }
+
+    private ClubDto mapToClubDto(Club club){
         return ClubDto.builder()
                 .id(club.getId())
                 .title(club.getTitle())
