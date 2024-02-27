@@ -15,6 +15,7 @@
                                id="title"
                                th:field="*{title}"
                                placeholder="Title">
+                        <p th:if="${#fields.hasErrors('title')}" class="text-danger" th:errors="*{title}"></p>
                     </div>
                     <div class="form-group mb-3">
                         <div class="form-group col-md-6">
@@ -24,6 +25,7 @@
                                    id="photoUrl"
                                    th:field="*{photoUrl}"
                                    placeholder="Photo Url">
+                            <p th:if="${#fields.hasErrors('photoUrl')}" class="text-danger" th:errors="*{photoUrl}"></p>
                         </div>
                     </div>
                     <div class="form-group mb-3">
@@ -33,8 +35,10 @@
                                id="content"
                                th:field="*{content}"
                                placeholder="Content">
+                        <p th:if="${#fields.hasErrors('content')}" class="text-danger" th:errors="*{content}"></p>
                     </div>
                     <button type="submit" class="btn btn-primary">Create</button>
+                </div>
             </form>
         </div>
     </section>

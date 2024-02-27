@@ -20,6 +20,7 @@
                         <p th:text="${club.content}" class="h3 text-decoration-none link-dark"
                            href="#!">Project name</p>
                     </div>
+                    <a class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">View</a>
                     <a class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">Edit</a>
                 </div>
             </div>
