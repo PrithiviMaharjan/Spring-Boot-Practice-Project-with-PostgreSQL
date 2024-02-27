@@ -1,14 +1,14 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}" >
 <body class="d-flex flex-column h-100">
 <main class="flex-shrink-0">
     <section layout:fragment="body" class="py-5">
         <div class="container px-5 my-5">
             <div class="text-center mb-5">
                 <h1 class="fw-bolder">Runners Near You</h1>
-                <p class="lead fw-normal text-muted mb-0" Runners Found In Your Area</p>
+                <p class="lead fw-normal text-muted mb-0"> Runners Found In Your Area</p>
             </div>
             <div class="row gx-5">
                 <div th:each="club :${clubs}" class="col-lg-6 mb-2">
@@ -20,7 +20,7 @@
                         <p th:text="${club.content}" class="h3 text-decoration-none link-dark"
                            href="#!">Project name</p>
                     </div>
-                    <a class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">View</a>
+                    <a class="btn btn-primary" th:href="@{/clubs/{clubId}(clubId=${club.id})}">View</a>
                     <a class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">Edit</a>
                 </div>
             </div>

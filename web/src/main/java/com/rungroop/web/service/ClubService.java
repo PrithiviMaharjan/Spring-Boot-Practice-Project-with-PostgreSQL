@@ -9,4 +9,5 @@ public interface ClubService {
     void saveClub(ClubDto club);
     ClubDto findClubById(long clubId);
     void updateClub(ClubDto clubDto);
+    void delete(long clubId);
 }
