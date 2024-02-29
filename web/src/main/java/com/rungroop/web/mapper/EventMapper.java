@@ -8,11 +8,11 @@ public class EventMapper {
     public static Event mapToEvent(EventDto eventDto){
         return Event.builder()
                 .id(eventDto.getId())
-                .club(eventDto.getClub())
                 .name(eventDto.getName())
+                .photoUrl(eventDto.getPhotoUrl())
                 .type(eventDto.getType())
                 .startTime(eventDto.getStartTime())
-                .endTIme(eventDto.getEndTIme())
+                .endTime(eventDto.getEndTime())
                 .createdOn(eventDto.getCreatedOn())
                 .updatedOn(eventDto.getUpdatedOn())
                 .build();
@@ -21,11 +21,11 @@ public class EventMapper {
     public static EventDto mapToEventDto(Event event){
         return EventDto.builder()
                 .id(event.getId())
-                .club(event.getClub())
                 .name(event.getName())
+                .photoUrl(event.getPhotoUrl())
                 .type(event.getType())
                 .startTime(event.getStartTime())
-                .endTIme(event.getEndTIme())
+                .endTime(event.getEndTime())
                 .createdOn(event.getCreatedOn())
                 .updatedOn(event.getUpdatedOn())
                 .build();

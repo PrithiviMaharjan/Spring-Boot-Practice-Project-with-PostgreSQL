@@ -2,10 +2,12 @@ package com.rungroop.web.dto;
 
 import com.rungroop.web.models.Club;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -14,17 +16,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class EventDto {
-    private long id;
-    @NotEmpty(message = "Please give a name!")
+    private Long id;
     private String name;
-    @NotEmpty(message = "Please give start time!")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime startTime;
-    @NotEmpty(message = "Please give end time!")
-    private LocalDateTime endTIme;
-    @NotEmpty(message = "Please give a type!")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime endTime;
     private String type;
+    private String photoUrl;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
-    @NotEmpty(message = "")
     private Club club;
 }
