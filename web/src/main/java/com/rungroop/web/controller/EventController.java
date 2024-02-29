@@ -9,11 +9,10 @@ import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 public class EventController {
@@ -24,8 +23,15 @@ public class EventController {
         this.eventService = eventService;
     }
 
+    @GetMapping("/events")
+    public String listEvents(Model model) {
+        List<EventDto> events = eventService.findAllEvents();
+        model.addAttribute("events", events);
+        return "events-list";
+    }
+
     @GetMapping("/events/{clubId}/new")
-    public String createEventForm(@PathVariable(name = "clubId") Long clubId, Model model){
+    public String createEventForm(@PathVariable(name = "clubId") Long clubId, Model model) {
         Event event = new Event();
         model.addAttribute("clubId", clubId);
         model.addAttribute("event", event);
@@ -34,8 +40,15 @@ public class EventController {
 
     @PostMapping("/events/{clubId}")
     public String createEvent(@PathVariable(value = "clubId") Long clubId,
-                              @ModelAttribute("event") EventDto eventDto){
+                              @ModelAttribute("event") EventDto eventDto) {
         eventService.createEvent(clubId, eventDto);
         return "redirect:/clubs/" + clubId;
+    }
+
+    @GetMapping("/events/search")
+    public String searchEvent(@RequestParam(value = "query") String query,
+                              Model model) {
+        model.addAttribute("events", eventService.searchEvent(query));
+        return "events-list";
     }
 }

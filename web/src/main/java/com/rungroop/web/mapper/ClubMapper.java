@@ -3,6 +3,8 @@ package com.rungroop.web.mapper;
 import com.rungroop.web.dto.ClubDto;
 import com.rungroop.web.models.Club;
 
+import java.util.stream.Collectors;
+
 public class ClubMapper {
     public static Club mapToClub(ClubDto clubDto) {
         return Club.builder()
@@ -23,6 +25,7 @@ public class ClubMapper {
                 .content(club.getContent())
                 .createdOn(club.getCreatedOn())
                 .updatedOn(club.getUpdatedOn())
+                .events(club.getEvents().stream().map(EventMapper::mapToEventDto).collect(Collectors.toList()))
                 .build();
     }
 }

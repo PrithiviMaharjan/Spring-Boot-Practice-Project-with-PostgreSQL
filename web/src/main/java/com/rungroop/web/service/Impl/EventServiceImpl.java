@@ -1,6 +1,8 @@
 package com.rungroop.web.service.Impl;
 
+import com.rungroop.web.dto.ClubDto;
 import com.rungroop.web.dto.EventDto;
+import com.rungroop.web.mapper.ClubMapper;
 import com.rungroop.web.mapper.EventMapper;
 import com.rungroop.web.models.Club;
 import com.rungroop.web.models.Event;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -30,5 +33,16 @@ public class EventServiceImpl implements EventService {
         Event event = EventMapper.mapToEvent(eventDto);
         event.setClub(club);
         eventRepository.save(event);
+    }
+
+    @Override
+    public List<EventDto> findAllEvents() {
+        return eventRepository.findAll().stream().map(EventMapper::mapToEventDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EventDto> searchEvent(String query) {
+        return eventRepository.searchEvents(query).stream()
+                .map(EventMapper::mapToEventDto).collect(Collectors.toList());
     }
 }

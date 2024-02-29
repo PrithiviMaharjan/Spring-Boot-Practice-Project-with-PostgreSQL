@@ -35,15 +35,14 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <!-- Blog post-->
-                        <div th:each="event :${event}" class="card mb-4">
+                        <div th:each="event :${club.events}" class="card mb-4">
                             <a href="#!"><img alt="..."
                                               class="card-img-top"
-                                              src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg"/></a>
+                                              th:src="${event.photoUrl}"/></a>
                             <div class="card-body">
-                                <div class="small text-muted">January 1, 2023</div>
-                                <h2 class="card-title h4">Event Title</h2>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                    Reiciendis aliquid atque, nulla.</p>
+                                <div class="small text-muted" th:text="${event.createdOn}"></div>
+                                <h2 class="card-title h4" th:text="${event.name}"></h2>
+                                <p class="card-text" th:text="${event.type}"></p>
                                 <a class="btn btn-primary" href="#!">Read more →</a>
                             </div>
                         </div>

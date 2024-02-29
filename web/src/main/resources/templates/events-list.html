@@ -1,0 +1,34 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}">
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+    <section layout:fragment="body" class="py-5">
+        <div class="container px-5 my-5">
+            <div class="text-center mb-5">
+                <h1 class="fw-bolder">Runners Near You</h1>
+                <p class="lead fw-normal text-muted mb-0"> Runners Found In Your Area</p>
+            </div>
+
+            <div class="row gx-5">
+                <div>
+                    <form th:action="@{/events/search}" class="form-inline my-2 my-lg-0 mb-3">
+                        <input name="query" class="form-control mr-sm-2 mb-5" type="search" placeholder="Search Events"
+                               aria-label="Search">
+                    </form>
+                </div>
+                <div th:each="event :${events}" class="col-lg-6 mb-5">
+                    <div class="position-relative mb-3">
+                        <p th:text="${event.name}" class="h3 fw-bolder text-decoration-none link-dark stretched-link"
+                           href="#!">Project name</p>
+                        <img class="img-fluid rounded-3 mb-3" th:src="${event.photoUrl}" alt="..."/><br/>
+                        <p th:text="${event.type}" class="h3 text-decoration-none link-dark" href="#!">Project name</p>
+                    </div>
+                    <!--                    <a class="btn btn-primary" th:href="@{/clubs/{clubId}(clubId=${event.club.id})}">View</a>-->
+                    <a class="btn btn-primary" th:href="@{/events/{eventId}/edit(eventId=${event.id})}">Edit</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>
