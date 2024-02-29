@@ -1,6 +1,7 @@
 package com.rungroop.web.service.Impl;
 
 import com.rungroop.web.dto.ClubDto;
+import com.rungroop.web.mapper.ClubMapper;
 import com.rungroop.web.models.Club;
 import com.rungroop.web.repository.ClubRepository;
 import com.rungroop.web.service.ClubService;
@@ -9,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.rungroop.web.mapper.ClubMapper.mapToClub;
+import static com.rungroop.web.mapper.ClubMapper.mapToClubDto;
 
 @Service
 public class ClubServiceImpl implements ClubService {
@@ -23,7 +27,7 @@ public class ClubServiceImpl implements ClubService {
     @Override
     public List<ClubDto> findAllClubs() {
         List<Club> club = clubRepository.findAll();
-        return club.stream().map(this::mapToClubDto).collect(Collectors.toList());
+        return club.stream().map(ClubMapper::mapToClubDto).collect(Collectors.toList());
     }
 
     @Override
@@ -46,25 +50,9 @@ public class ClubServiceImpl implements ClubService {
         clubRepository.deleteById(clubId);
     }
 
-    private Club mapToClub(ClubDto clubDto){
-        return Club.builder()
-                .id(clubDto.getId())
-                .title(clubDto.getTitle())
-                .photoUrl(clubDto.getPhotoUrl())
-                .content(clubDto.getContent())
-                .createdOn(clubDto.getCreatedOn())
-                .updatedOn(clubDto.getUpdatedOn())
-                .build();
-    }
-
-    private ClubDto mapToClubDto(Club club){
-        return ClubDto.builder()
-                .id(club.getId())
-                .title(club.getTitle())
-                .photoUrl(club.getPhotoUrl())
-                .content(club.getContent())
-                .createdOn(club.getCreatedOn())
-                .updatedOn(club.getUpdatedOn())
-                .build();
+    @Override
+    public List<ClubDto> searchClub(String query) {
+        return clubRepository.searchClubs(query).stream()
+                .map(ClubMapper::mapToClubDto).collect(Collectors.toList());
     }
 }

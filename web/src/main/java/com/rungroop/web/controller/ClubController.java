@@ -15,7 +15,7 @@ import java.util.List;
 @Controller
 public class ClubController {
 
-    private ClubService clubService;
+    private final ClubService clubService;
 
     @Autowired
     public ClubController(ClubService clubService) {
@@ -72,5 +72,12 @@ public class ClubController {
     public String deleteClub(@PathVariable("clubId") long clubId, Model model){
         clubService.delete(clubId);
         return "redirect:/clubs";
+    }
+
+    @GetMapping("clubs/search")
+    public String searchClub(@RequestParam(value =  "query") String query, Model model){
+        List<ClubDto> clubs = clubService.searchClub(query);
+        model.addAttribute("clubs", clubs);
+        return "clubs-list";
     }
 }
