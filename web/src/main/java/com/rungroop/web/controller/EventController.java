@@ -1,5 +1,6 @@
 package com.rungroop.web.controller;
 
+import com.rungroop.web.dto.ClubDto;
 import com.rungroop.web.dto.EventDto;
 import com.rungroop.web.models.Event;
 import com.rungroop.web.service.EventService;
@@ -51,4 +52,32 @@ public class EventController {
         model.addAttribute("events", eventService.searchEvent(query));
         return "events-list";
     }
+
+    @GetMapping("events/{eventId}")
+    public String eventDetail(@PathVariable("eventId") Long eventId,
+                              Model model){
+        EventDto eventDto = eventService.findEventById(eventId);
+        model.addAttribute("event", eventDto);
+        return "events-detail";
+    }
+
+    @GetMapping("events/{eventId}/edit")
+    public String editEventForm(
+            @PathVariable("eventId") Long eventId,
+            Model model){
+        EventDto eventDto = eventService.findEventById(eventId);
+        model.addAttribute("event", eventDto);
+        return "events-edit";
+    }
+
+    @PostMapping("events/{eventId}/edit")
+    public String updateEvent(
+            @PathVariable("eventId") Long eventId,
+            @ModelAttribute("event") EventDto eventDto
+            ){
+        eventDto.setId(eventId);
+        eventService.updateEvent(eventDto);
+        return "redirect:/events";
+    }
+
 }

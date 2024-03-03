@@ -11,8 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.rungroop.web.mapper.ClubMapper.mapToClub;
-import static com.rungroop.web.mapper.ClubMapper.mapToClubDto;
+import static com.rungroop.web.mapper.ClubMapper.*;
 
 @Service
 public class ClubServiceImpl implements ClubService {
