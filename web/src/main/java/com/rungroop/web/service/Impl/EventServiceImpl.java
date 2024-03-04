@@ -56,5 +56,8 @@ public class EventServiceImpl implements EventService {
         eventRepository.save(EventMapper.mapToEvent(eventDto));
     }
 
-
+    @Override
+    public void deleteEventById(Long eventId) {
+        eventRepository.deleteById(eventId);
+    }
 }
