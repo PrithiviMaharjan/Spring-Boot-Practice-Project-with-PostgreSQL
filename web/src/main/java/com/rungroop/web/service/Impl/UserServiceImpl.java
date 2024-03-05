@@ -28,4 +28,14 @@ public class UserServiceImpl implements UserService
     public void saveUser(RegistrationDto registrationDto) {
         userRepository.save(mapToUserEntity(registrationDto, roleRepository.findByName("USER")));
     }
+
+    @Override
+    public UserEntity findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public UserEntity findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 }

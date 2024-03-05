@@ -12,19 +12,21 @@
         }
 
         @media screen and (max-width: 450px) {
-            .login-form{
+            .login-form {
                 margin-top: 10%;
             }
-            .register-form{
+
+            .register-form {
                 margin-top: 10%;
             }
         }
-        @media screen and (min-width: 768px){
-            .main{
+
+        @media screen and (min-width: 768px) {
+            .main {
                 margin-left: 30%;
             }
 
-            .sidenav{
+            .sidenav {
                 width: 40%;
                 position: fixed;
                 z-index: 1;
@@ -39,7 +41,8 @@
                 Invalid username and password.
             </div>
             <div th:if="${param.logout}" class="alert alert-success">
-                You have been logged out.</div>
+                You have been logged out.
+            </div>
             <div class="login-form">
                 <form method="post" th:action="@{/login}">
                     <div class="form-group">
@@ -60,7 +63,9 @@
                                 placeholder="Password"
                                 name="password">
                     </div>
-                    <button th:href="@{/register}" type="submit" class="btn btn-black">Don't have an account? Register here.</button>
+                    <button th:href="@{/register}" type="submit" class="btn btn-black">Don't have an account? Register
+                        here.
+                    </button>
                     <button type="submit" value="Log in" class="btn btn-secondary">Login</button>
                 </form>
             </div>
