@@ -1,7 +1,9 @@
 package com.rungroop.web.dto;
 
 import jakarta.validation.constraints.NotEmpty;
+import lombok.Data;
 
+@Data
 public class RegistrationDto {
     private Long id;
 
