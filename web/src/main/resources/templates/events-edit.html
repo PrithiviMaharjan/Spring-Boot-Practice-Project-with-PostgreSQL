@@ -7,8 +7,6 @@
     <section layout:fragment="body" class="py-5">
         <div class="container">
             <form role="form" method="post" th:action="@{/events/{eventId}/edit(eventId = ${eventId})}" th:object="${event}">
-                <input type="hidden"
-                       th:field="*{club}">
                 <div class="form-row">
                     <div class="form-group mb-3">
                         <label for="name">Name</label>

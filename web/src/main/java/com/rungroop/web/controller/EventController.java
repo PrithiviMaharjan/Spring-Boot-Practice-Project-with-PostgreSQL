@@ -56,14 +56,14 @@ public class EventController {
         return "events-list";
     }
 
-    @GetMapping("events/{eventId}")
+    @GetMapping("/events/{eventId}")
     public String eventDetail(@PathVariable("eventId") Long eventId, Model model) {
         EventDto eventDto = eventService.findEventById(eventId);
         model.addAttribute("event", eventDto);
         return "events-detail";
     }
 
-    @GetMapping("events/{eventId}/edit")
+    @GetMapping("/events/{eventId}/edit")
     public String editEventForm(@PathVariable("eventId") Long eventId, Model model) {
         EventDto eventDto = eventService.findEventById(eventId);
         model.addAttribute("event", eventDto);
