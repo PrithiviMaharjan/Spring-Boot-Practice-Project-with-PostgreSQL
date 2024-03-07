@@ -21,10 +21,9 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public String loginPage() {
+    public String loginPage(){
         return "login";
     }
-
 
     @GetMapping("/register")
     public String getRegisterForm(Model model) {
@@ -34,17 +33,17 @@ public class AuthController {
     }
 
     @PostMapping("/register/save")
-    public String register(@Valid @ModelAttribute("user") RegistrationDto user,
+    public String register(@Valid @ModelAttribute("user")RegistrationDto user,
                            BindingResult result, Model model) {
         UserEntity existingUserEmail = userService.findByEmail(user.getEmail());
-        if (existingUserEmail != null && existingUserEmail.getEmail() != null && !existingUserEmail.getEmail().isEmpty()) {
+        if(existingUserEmail != null && existingUserEmail.getEmail() != null && !existingUserEmail.getEmail().isEmpty()) {
             return "redirect:/register?fail";
         }
         UserEntity existingUserUsername = userService.findByUsername(user.getUsername());
-        if (existingUserUsername != null && existingUserUsername.getUsername() != null && !existingUserUsername.getUsername().isEmpty()) {
+        if(existingUserUsername != null && existingUserUsername.getUsername() != null && !existingUserUsername.getUsername().isEmpty()) {
             return "redirect:/register?fail";
         }
-        if (result.hasErrors()) {
+        if(result.hasErrors()) {
             model.addAttribute("user", user);
             return "register";
         }

@@ -12,21 +12,19 @@
         }
 
         @media screen and (max-width: 450px) {
-            .login-form {
+            .login-form{
                 margin-top: 10%;
             }
-
-            .register-form {
+            .register-form{
                 margin-top: 10%;
             }
         }
-
-        @media screen and (min-width: 768px) {
-            .main {
+        @media screen and (min-width: 768px){
+            .main{
                 margin-left: 30%;
             }
 
-            .sidenav {
+            .sidenav{
                 width: 40%;
                 position: fixed;
                 z-index: 1;
@@ -38,8 +36,7 @@
     <div class="main">
         <div class="col-md-6 col-sm-12">
             <div th:if="${param.fail}" class="alert alert-success">
-                Username or email already exists
-            </div>
+                Username or email already exists</div>
             <div class="login-form">
                 <form method="post" role="form" th:action="@{/register/save}" th:object="${user}">
                     <div class="form-group">
