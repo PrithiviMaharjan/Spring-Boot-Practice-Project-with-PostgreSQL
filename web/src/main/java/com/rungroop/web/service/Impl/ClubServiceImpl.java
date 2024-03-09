@@ -36,21 +36,10 @@ public class ClubServiceImpl implements ClubService {
 
     @Override
     public void saveClub(ClubDto clubDto) {
-        String username = SecurityUtil.getSessionUser();
-
-        if (username != null) {
-            UserEntity user = userRepository.findByEmail(username);
-
-            if (user != null) {
-                Club club = mapToClub(clubDto);
-                club.setCreatedBy(user);
-                clubRepository.save(club);
-            } else {
-                // Log or handle the case where the user is not found
-            }
-        } else {
-            // Log or handle the case where the username is null
-        }
+        UserEntity user = userRepository.findByEmail(SecurityUtil.getSessionUser());
+        Club club = mapToClub(clubDto);
+        club.setCreatedBy(user);
+        clubRepository.save(club);
     }
 
     @Override
@@ -60,7 +49,7 @@ public class ClubServiceImpl implements ClubService {
 
     @Override
     public void updateClub(ClubDto clubDto) {
-        UserEntity user = userRepository.findByUsername(SecurityUtil.getSessionUser());
+        UserEntity user = userRepository.findByEmail(SecurityUtil.getSessionUser());
         Club club = mapToClub(clubDto);
         club.setCreatedBy(user);
         clubRepository.save(club);
