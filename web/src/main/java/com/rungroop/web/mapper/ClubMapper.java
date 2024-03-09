@@ -6,14 +6,15 @@ import com.rungroop.web.models.Club;
 import java.util.stream.Collectors;
 
 public class ClubMapper {
-    public static Club mapToClub(ClubDto clubDto) {
+    public static Club mapToClub(ClubDto club) {
         return Club.builder()
-                .id(clubDto.getId())
-                .title(clubDto.getTitle())
-                .photoUrl(clubDto.getPhotoUrl())
-                .content(clubDto.getContent())
-                .createdOn(clubDto.getCreatedOn())
-                .updatedOn(clubDto.getUpdatedOn())
+                .id(club.getId())
+                .title(club.getTitle())
+                .photoUrl(club.getPhotoUrl())
+                .content(club.getContent())
+                .createdBy(club.getCreatedBy())
+                .createdOn(club.getCreatedOn())
+                .updatedOn(club.getUpdatedOn())
                 .build();
     }
 
@@ -23,6 +24,7 @@ public class ClubMapper {
                 .title(club.getTitle())
                 .photoUrl(club.getPhotoUrl())
                 .content(club.getContent())
+                .createdBy(club.getCreatedBy())
                 .createdOn(club.getCreatedOn())
                 .updatedOn(club.getUpdatedOn())
                 .events(club.getEvents().stream().map(EventMapper::mapToEventDto).collect(Collectors.toList()))

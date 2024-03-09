@@ -3,8 +3,11 @@ package com.rungroop.web.service.Impl;
 import com.rungroop.web.dto.ClubDto;
 import com.rungroop.web.mapper.ClubMapper;
 import com.rungroop.web.models.Club;
+import com.rungroop.web.models.UserEntity;
 import com.rungroop.web.repository.ClubRepository;
+import com.rungroop.web.repository.UserRepository;
 import com.rungroop.web.service.ClubService;
+import com.rungroop.web.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +20,12 @@ import static com.rungroop.web.mapper.ClubMapper.*;
 public class ClubServiceImpl implements ClubService {
 
     private final ClubRepository clubRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public ClubServiceImpl(ClubRepository clubRepository) {
+    public ClubServiceImpl(ClubRepository clubRepository, UserRepository userRepository) {
         this.clubRepository = clubRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -31,7 +36,21 @@ public class ClubServiceImpl implements ClubService {
 
     @Override
     public void saveClub(ClubDto clubDto) {
-        clubRepository.save(mapToClub(clubDto));
+        String username = SecurityUtil.getSessionUser();
+
+        if (username != null) {
+            UserEntity user = userRepository.findByEmail(username);
+
+            if (user != null) {
+                Club club = mapToClub(clubDto);
+                club.setCreatedBy(user);
+                clubRepository.save(club);
+            } else {
+                // Log or handle the case where the user is not found
+            }
+        } else {
+            // Log or handle the case where the username is null
+        }
     }
 
     @Override
@@ -41,7 +60,10 @@ public class ClubServiceImpl implements ClubService {
 
     @Override
     public void updateClub(ClubDto clubDto) {
-        clubRepository.save(mapToClub(clubDto));
+        UserEntity user = userRepository.findByUsername(SecurityUtil.getSessionUser());
+        Club club = mapToClub(clubDto);
+        club.setCreatedBy(user);
+        clubRepository.save(club);
     }
 
     @Override
