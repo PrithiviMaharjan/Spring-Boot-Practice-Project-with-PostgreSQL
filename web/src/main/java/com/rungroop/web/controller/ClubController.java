@@ -2,7 +2,10 @@ package com.rungroop.web.controller;
 
 import com.rungroop.web.dto.ClubDto;
 import com.rungroop.web.models.Club;
+import com.rungroop.web.models.UserEntity;
+import com.rungroop.web.security.SecurityUtil;
 import com.rungroop.web.service.ClubService;
+import com.rungroop.web.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,29 +19,37 @@ import java.util.List;
 public class ClubController {
 
     private final ClubService clubService;
+    private final UserService userService;
 
     @Autowired
-    public ClubController(ClubService clubService) {
+    public ClubController(ClubService clubService, UserService userService) {
         this.clubService = clubService;
+        this.userService = userService;
     }
 
     @GetMapping("/clubs")
-    public String listClubs(Model model){
+    public String listClubs(Model model) {
         List<ClubDto> clubs = clubService.findAllClubs();
         model.addAttribute("clubs", clubs);
+
+        String userEmail = SecurityUtil.getSessionUser();
+        if (userEmail != null) {
+            UserEntity user = userService.findByEmail(userEmail);
+            model.addAttribute("user", user);
+        }
         return "clubs-list";
     }
 
     @GetMapping("/clubs/new")
-    public String createClubForm(Model model){
+    public String createClubForm(Model model) {
         Club club = new Club();
         model.addAttribute("club", club);
-        return  "clubs-create";
+        return "clubs-create";
     }
 
     @PostMapping("/clubs/new")
     public String saveClub(@Valid @ModelAttribute("club") ClubDto clubDto,
-                           BindingResult result){
+                           BindingResult result) {
         if (result.hasErrors()) return "clubs-create";
         clubService.saveClub(clubDto);
         return "redirect:/clubs";
@@ -46,7 +57,7 @@ public class ClubController {
 
     @GetMapping("clubs/{clubId}/edit")
     public String editClubForm(@PathVariable("clubId") long clubId,
-                               Model model){
+                               Model model) {
         ClubDto clubDto = clubService.findClubById(clubId);
         model.addAttribute("club", clubDto);
         return "clubs-edit";
@@ -55,8 +66,8 @@ public class ClubController {
     @PostMapping("clubs/{clubId}/edit")
     public String updateClub(@PathVariable("clubId") long clubId,
                              @Valid @ModelAttribute("club") ClubDto clubDto,
-                             BindingResult result, Model model){
-        if(result.hasErrors()) {
+                             BindingResult result, Model model) {
+        if (result.hasErrors()) {
             model.addAttribute("club", clubDto);
             return "clubs-edit";
         }
@@ -68,22 +79,29 @@ public class ClubController {
     @GetMapping("clubs/{clubId}")
     public String clubDetail(
             @PathVariable("clubId") long clubId,
-            Model model){
+            Model model) {
+
+        String userEmail = SecurityUtil.getSessionUser();
+        if (userEmail != null) {
+            UserEntity user = userService.findByEmail(userEmail);
+            model.addAttribute("user", user);
+        }
+
         ClubDto clubDto = clubService.findClubById(clubId);
         model.addAttribute("club", clubDto);
         return "clubs-detail";
     }
 
     @GetMapping("clubs/{clubId}/delete")
-    public String deleteClub(@PathVariable("clubId") long clubId){
+    public String deleteClub(@PathVariable("clubId") long clubId) {
         clubService.delete(clubId);
         return "redirect:/clubs";
     }
 
     @GetMapping("clubs/search")
     public String searchClub(
-            @RequestParam(value= "query") String query,
-            Model model){
+            @RequestParam(value = "query") String query,
+            Model model) {
         List<ClubDto> clubs = clubService.searchClub(query);
         model.addAttribute("clubs", clubs);
         return "clubs-list";

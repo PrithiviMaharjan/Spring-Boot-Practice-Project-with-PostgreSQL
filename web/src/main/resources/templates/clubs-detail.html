@@ -26,8 +26,11 @@
                         <div class="small text-muted" th:text="${club.createdOn}"></div>
                         <h2 class="card-title" th:text="${club.title}"></h2>
                         <p class="card-text" th:text="${club.content}"></p>
-                        <a class="btn btn-primary" th:href="@{/clubs/{clubId}/delete(clubId=${club.id})}">Delete</a>
-                        <a class="btn btn-primary" th:href="@{/events/{clubId}/new(clubId=${club.id})}">Create Event</a>
+                        <div th:if="${club.createdBy.id} == ${user.id}" class="d-inline">
+                            <a class="btn btn-primary" th:href="@{/clubs/{clubId}/delete(clubId=${club.id})}">Delete</a>
+                            <a class="btn btn-primary" th:href="@{/events/{clubId}/new(clubId=${club.id})}">Create
+                                Event</a>
+                        </div>
                     </div>
                 </div>
 
@@ -43,7 +46,8 @@
                                 <div class="small text-muted" th:text="${event.createdOn}"></div>
                                 <h2 class="card-title h4" th:text="${event.name}"></h2>
                                 <p class="card-text" th:text="${event.type}"></p>
-                                <a class="btn btn-primary" th:href="@{/events/{eventId}(eventId=${event.id})}">More →</a>
+                                <a class="btn btn-primary" th:href="@{/events/{eventId}(eventId=${event.id})}">More
+                                    →</a>
                             </div>
                         </div>
                     </div>
